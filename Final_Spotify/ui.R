@@ -68,6 +68,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                         "Trending",
                         h2("What's Trending?"),
                         h3(),
+                        
+                        actionButton("action", label = "Action"),
                         ## Plot charts showing top artists, songs, genres, etc
                         ## Trending in each country??/state
                         ## 

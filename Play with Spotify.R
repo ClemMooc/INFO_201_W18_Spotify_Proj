@@ -12,10 +12,11 @@ x <- GET(playlists_url, my_headers)
 playlists <- fromJSON(content(x,"text"))
 playlist_id <- gsub(".*:","",playlists$items$uri[1])
 
-tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id)
+tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id,"/tracks")
 get.track <- GET(tracks_url, my_headers)
 tracks <- fromJSON(content(get.track, "text"))
-get.album.id <- gsub(".*:","",tracks$items$track$album$id[1])
+track_data <- as.data.frame(tracks$items$track)
+get.album.id <- gsub(".*:","",track_data$album$id[1])
 
 album_url <- paste0("https://api.spotify.com/v1/albums/", get.album.id)
 get.alums <- GET(album_url, my_headers)
@@ -26,3 +27,4 @@ artist_url <- paste0("https://api.spotify.com/v1/artists/",get.artist.id)
 get.artist <- GET(artist_url, my_headers)
 artists <- fromJSON(content(get.artist, "text"))
 genres <- as.data.frame(artists$genres)
+

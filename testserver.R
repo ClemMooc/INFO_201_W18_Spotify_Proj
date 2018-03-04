@@ -12,7 +12,7 @@ server <- function(input, output) {
  
     user_id <- input$text
     user_id <- 1262636354
-    source('keys.R')
+    source('Final_Spotify/data/keys.R')
     my_headers<-add_headers(c(Authorization=paste('Bearer',spotify.token,sep=' ')))
     
     playlists_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists")
@@ -20,13 +20,13 @@ server <- function(input, output) {
     playlists <- fromJSON(content(x,"text"))
     playlist_id <- gsub(".*:","",playlists$items$uri[1])
     
-    tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id/"tracks")
+    tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id,"/tracks")
     get.track <- GET(tracks_url, my_headers)
     tracks <- fromJSON(content(get.track, "text"))
     track_data <- as.data.frame(tracks$items$track)
     track_release_dates <- as.data.frame(track_data$album$release_date)
     track_date_pop <- data.frame(date = track_data$album$release_date, popularity = track_data$popularity)
-    get.album.id <- gsub(".*:","",tracks$items$track$album$id[1])
+    get.album.id <- gsub(".*:","",track_data$album$id[1])
     
     album_url <- paste0("https://api.spotify.com/v1/albums/", get.album.id)
     get.alums <- GET(album_url, my_headers)

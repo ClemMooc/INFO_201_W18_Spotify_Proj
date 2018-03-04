@@ -30,8 +30,8 @@ server <- function(input, output) {
     get.album.id <- gsub(".*:","",track_data$album$id[1])
     
     album_url <- paste0("https://api.spotify.com/v1/albums/", get.album.id)
-    get.alums <- GET(album_url, my_headers)
-    albums <- fromJSON(content(get.alums,"text"))
+    get.albums <- GET(album_url, my_headers)
+    albums <- fromJSON(content(get.albums,"text"))
     get.artist.id <- gsub(".*:","",albums$artists$id[1])
     
     artist_url <- paste0("https://api.spotify.com/v1/artists/",get.artist.id)
@@ -40,7 +40,6 @@ server <- function(input, output) {
     genres <- as.data.frame(artists$genres)
     
   })
-  
   output$scatter <- renderPlotly({
     plot_ly(data = track_date_pop, x = ~date, y = ~popularity, type = 'scatter',
             marker = list(size = 10,

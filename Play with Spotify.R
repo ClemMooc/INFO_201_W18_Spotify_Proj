@@ -5,15 +5,24 @@ library('httpuv')
 
 source('Final_Spotify/data/keys.R')
 my_headers<-add_headers(c(Authorization=paste('Bearer',spotify.token,sep=' ')))
+userid <- 12170429496
+  
+playlists_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists")
+x <- GET(playlists_url, my_headers)
+playlists <- fromJSON(content(x,"text"))
+playlist_id <- gsub(".*:","",playlists$items$uri[1])
 
-x <- GET("https://api.spotify.com/v1/users/12170429496/playlists", my_headers)
-abc <- fromJSON(content(x,"text"))
+tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id)
+get.track <- GET(tracks_url, my_headers)
+tracks <- fromJSON(content(get.track, "text"))
+get.album.id <- gsub(".*:","",tracks$items$track$album$id[1])
 
-tracks <- GET("https://api.spotify.com/v1/albums/2wart5Qjnvx1fd7LPdQxgJ", my_headers)
-aaa <- fromJSON(content(tracks,"text"))
+album_url <- paste0("https://api.spotify.com/v1/albums/", get.album.id)
+get.alums <- GET(album_url, my_headers)
+albums <- fromJSON(content(get.alums,"text"))
+get.artist.id <- gsub(".*:","",albums$artists$id[1])
 
-tracks2 <- GET("https://api.spotify.com/v1/tracks/2daZovie6pc2ZK7StayD1K", my_headers)
-bbb <- fromJSON(content(tracks2,"text"))
-
-artist <- GET("https://api.spotify.com/v1/artists/12Chz98pHFMPJEknJQMWvI", my_headers)
-c <- fromJSON(content(artist,"text"))
+artist_url <- paste0("https://api.spotify.com/v1/artists/",get.artist.id)
+get.artist <- GET(artist_url, my_headers)
+artists <- fromJSON(content(get.artist, "text"))
+genres <- as.data.frame(artists$genres)

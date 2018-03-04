@@ -1,3 +1,4 @@
+
 ##spotify.token 
 
 spotify.client_id <- "9b82e79f3ec84c59986bf458d342b593"

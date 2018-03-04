@@ -2,7 +2,7 @@ library('httr')
 library('dplyr')
 library('jsonlite')
 source('Final_Spotify/data/keys.R')
-id_secret  <- RCurl::base64(paste(spotify.client_id, spotify.secret, sep = ":"))
+id_secret <- RCurl::base64(paste(spotify.client_id, spotify.secret, sep = ":"))
 my_headers<-add_headers(c(Authorization=paste('Basic',id_secret,sep=' ')))
 my_body<-list(grant_type='client_credentials')
 spotify <- POST('https://accounts.spotify.com/api/token',

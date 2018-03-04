@@ -13,6 +13,7 @@ server <- function(input, output) {
     user_id <- input$text
     user_id <- 1262636354
     source('Final_Spotify/data/keys.R')
+    spotify.token = "BQA0TAszmTxaa0itX8cH67cBONW_XPj7t8gCA1sdab5NQmBaJelhPN2ZiuQEYT2d4xc4U97WdF8N7BcSp6g"
     my_headers<-add_headers(c(Authorization=paste('Bearer',spotify.token,sep=' ')))
     
     playlists_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists")

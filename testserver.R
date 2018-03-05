@@ -4,7 +4,10 @@ library('httr')
 library('openssl')
 
 server <- function(input, output) {
-  
+  df <- data.frame(
+    group = c("Male", "Female", "Child"),
+    value = c(25, 25, 50)
+  )
   observeEvent(input$action, {
  
     user_id <- input$text
@@ -20,12 +23,24 @@ server <- function(input, output) {
     playlist_id <- gsub(".*:","",playlists$items$uri)
     
     ##gets tracks based on user's selected playlist
+    ## getting Error: length(url) == 1 is not TRUE
+    i = 1
+    track_list <- list()
+    for (val in playlist_id) {
+      tracks_url <- paste0("https://api.spotify.com/v1/users/",user_id,"/playlists/",playlist_id,"/tracks")
+      get.track <- GET(tracks_url, my_headers)
+      tracks <- fromJSON(content(get.track, "text"))
+      track_id <- as.data.frame(tracks$items$track$id)
+      track_list[i] <- 
+      i = i + 1
+    }                       
+    
     tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id,"/tracks")
     get.track <- GET(tracks_url, my_headers)
     tracks <- fromJSON(content(get.track, "text"))
     track_data <- as.data.frame(tracks$items$track)
     track_release_dates <- as.data.frame(track_data$album$release_date)
-    track_date_pop <- data.frame(date = track_data$album$release_date, popularity = track_data$popularity) ## data fram w/ track release date and popularity
+    track_date_pop <- data.frame(date = track_data$album$release_date, popularity = track_data$popularity)
     get.album.id <- gsub(".*:","",track_data$album$id[1])
     
     album_url <- paste0("https://api.spotify.com/v1/albums/", get.album.id)

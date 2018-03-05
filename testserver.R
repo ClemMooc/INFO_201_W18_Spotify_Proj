@@ -60,7 +60,7 @@ server <- function(input, output) {
     explicit.values = c(explicit.yes, explicit.no)
     explicit.label = c(colnames(explicit.df)[1], colnames(explicit.df)[2])
     
-    visual1 = plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie',
+    plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie',
                       textposition = 'inside',
                       textinfo = 'label+percent',
                       insidetextfont = list(color = "white"),

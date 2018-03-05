@@ -4,10 +4,7 @@ library('httr')
 library('openssl')
 
 server <- function(input, output) {
-  df <- data.frame(
-    group = c("Male", "Female", "Child"),
-    value = c(25, 25, 50)
-  )
+  
   observeEvent(input$action, {
  
     user_id <- input$text
@@ -16,17 +13,19 @@ server <- function(input, output) {
     spotify.token = "BQA0TAszmTxaa0itX8cH67cBONW_XPj7t8gCA1sdab5NQmBaJelhPN2ZiuQEYT2d4xc4U97WdF8N7BcSp6g"
     my_headers<-add_headers(c(Authorization=paste('Bearer',spotify.token,sep=' ')))
     
+    ##gets playlist ids based on user
     playlists_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists")
     x <- GET(playlists_url, my_headers)
     playlists <- fromJSON(content(x,"text"))
-    playlist_id <- gsub(".*:","",playlists$items$uri[1])
+    playlist_id <- gsub(".*:","",playlists$items$uri)
     
+    ##gets tracks based on user's selected playlist
     tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id,"/tracks")
     get.track <- GET(tracks_url, my_headers)
     tracks <- fromJSON(content(get.track, "text"))
     track_data <- as.data.frame(tracks$items$track)
     track_release_dates <- as.data.frame(track_data$album$release_date)
-    track_date_pop <- data.frame(date = track_data$album$release_date, popularity = track_data$popularity)
+    track_date_pop <- data.frame(date = track_data$album$release_date, popularity = track_data$popularity) ## data fram w/ track release date and popularity
     get.album.id <- gsub(".*:","",track_data$album$id[1])
     
     album_url <- paste0("https://api.spotify.com/v1/albums/", get.album.id)
@@ -40,6 +39,7 @@ server <- function(input, output) {
     genres <- as.data.frame(artists$genres)
     
   })
+  ##renders basic scatterplot based on track popularity and release date
   output$scatter <- renderPlotly({
     plot_ly(data = track_date_pop, x = ~date, y = ~popularity, type = 'scatter',
             marker = list(size = 10,

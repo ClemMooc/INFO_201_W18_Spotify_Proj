@@ -16,10 +16,24 @@ server <- function(input, output) {
     spotify.token = "BQA0TAszmTxaa0itX8cH67cBONW_XPj7t8gCA1sdab5NQmBaJelhPN2ZiuQEYT2d4xc4U97WdF8N7BcSp6g"
     my_headers<-add_headers(c(Authorization=paste('Bearer',spotify.token,sep=' ')))
     
+    ##gets playlist ids based on user
     playlists_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists")
     x <- GET(playlists_url, my_headers)
     playlists <- fromJSON(content(x,"text"))
-    playlist_id <- gsub(".*:","",playlists$items$uri[1])
+    playlist_id <- gsub(".*:","",playlists$items$uri)
+    
+    ##gets tracks based on user's selected playlist
+    ## getting Error: length(url) == 1 is not TRUE
+    i = 1
+    track_list <- list()
+    for (val in playlist_id) {
+      tracks_url <- paste0("https://api.spotify.com/v1/users/",user_id,"/playlists/",playlist_id,"/tracks")
+      get.track <- GET(tracks_url, my_headers)
+      tracks <- fromJSON(content(get.track, "text"))
+      track_id <- as.data.frame(tracks$items$track$id)
+      track_list[i] <- 
+      i = i + 1
+    }                       
     
     tracks_url <- paste0("https://api.spotify.com/v1/users/",userid,"/playlists/",playlist_id,"/tracks")
     get.track <- GET(tracks_url, my_headers)
@@ -40,6 +54,7 @@ server <- function(input, output) {
     genres <- as.data.frame(artists$genres)
     
   })
+  ##renders basic scatterplot based on track popularity and release date
   output$scatter <- renderPlotly({
     plot_ly(data = track_date_pop, x = ~date, y = ~popularity, type = 'scatter',
             marker = list(size = 10,

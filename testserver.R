@@ -50,5 +50,26 @@ server <- function(input, output) {
              yaxis = list(zeroline = FALSE),
              xaxis = list(zeroline = FALSE))
   })
+  output$pie <- renderPlotly({
+    
+    explicit = track_data$explicit
+    explicit.yes = (sum(explicit == "TRUE"))
+    explicit.no = (sum(explicit == "FALSE"))
+    
+    explicit.df = data.frame("Explicit" = explicit.yes, "Non-Explicit" = explicit.no)
+    explicit.values = c(explicit.yes, explicit.no)
+    explicit.label = c(colnames(explicit.df)[1], colnames(explicit.df)[2])
+    
+    visual1 = plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie',
+                      textposition = 'inside',
+                      textinfo = 'label+percent',
+                      insidetextfont = list(color = "white"),
+                      marker = list(colors = c('#1DB954', 'black'), line = list(color = '#1DB954', width = 1)) 
+    ) %>%
+      layout(title = paste0('Ratio of Explicit and Non-Explicit tracks in Playlist'),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+  })
+  
 }
 

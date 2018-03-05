@@ -56,7 +56,7 @@ server <- function(input, output) {
     explicit.yes = (sum(explicit == "TRUE"))
     explicit.no = (sum(explicit == "FALSE"))
     
-    explicit.df = data.frame("Explicit" = explicit.yes, "Non-Explicit" = explicit.no)
+    explicit.df = data.frame("Explicit" = explicit.yes, "Clean" = explicit.no)
     explicit.values = c(explicit.yes, explicit.no)
     explicit.label = c(colnames(explicit.df)[1], colnames(explicit.df)[2])
     

@@ -8,7 +8,7 @@ source('Final_Spotify/data/keys.R')
 my_headers<-add_headers(c(Authorization=paste('Bearer', spotify.token, sep=' ')))
 
 # User id, to be made into a variable that depends on input.
-user.id = "12158467793"
+user.id = "12158467793"#"12170429496"
 
 # playlists request, takes user ID
 playlist.request <- GET(paste0("https://api.spotify.com/v1/users/",user.id,"/playlists?limit=50"), my_headers)
@@ -73,5 +73,39 @@ for (a in 1:length(rownames(playlists))) {
   }
 }
 
-print(length(rownames(all_songs)))
-print(length(all_artists))
+## ----------------- Getting the tracks information ------------------
+# Since the tracks endpoint can only accept 50 songs at a time, 
+# we must have a list of dataframes containing only 50 songs.
+
+# Create an empty list of data frames
+dfs_50_songs <- list()
+
+# The number of dataframes to create
+number_of_chunks <- ceiling(length(rownames(all_songs))/50)
+
+
+# Splits the dataframe of song ids into 50 song dataframes and puts into list
+for(i in 1:number_of_chunks){
+  start <- ((50*i) - 49)
+  stop <- (50*i)
+  dfs_50_songs[[i]] <- slice(all_songs, start:stop)
+}
+
+# Gets track information 50 songs at a time
+for(i in 1:number_of_chunks){
+  tracks <- GET(paste0("https://api.spotify.com/v1/tracks?ids=", gsub(" ", "", toString(dfs_50_songs[[i]]$songs_from_playlist))), my_headers)
+  trackslist <- fromJSON(content(tracks, "text"))
+  dfs_50_songs[[i]][3] <- trackslist$tracks$album$release_date
+  dfs_50_songs[[i]][4] <- trackslist$tracks$explicit
+  dfs_50_songs[[i]][5] <- trackslist$tracks$popularity
+  dfs_50_songs[[i]][6] <- trackslist$tracks$name
+  dfs_50_songs[[i]] <- rename(dfs_50_songs[[i]], release.date = V3, explicit = V4, popularity = V5, name = V6)
+}
+
+# Combines all data frames back together to create one big dataframe
+song_info <- data_frame()
+for(i in 1:number_of_chunks){
+  song_info <- bind_rows(song_info, dfs_50_songs[[i]])
+}
+
+# song_info is the final dataframe.

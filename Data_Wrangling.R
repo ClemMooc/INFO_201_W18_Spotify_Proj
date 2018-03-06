@@ -32,6 +32,12 @@ all_songs <- data_frame()
 # Create empty vector for artists
 all_artists <- c()
 
+# Create empty vector for genres
+all_genres <- c()
+
+# Creat empty data frame for the genres
+all_artists_genres <- data_frame()
+
 ## For each playlist...
 for (a in 1:length(rownames(playlists))) {
   
@@ -57,6 +63,15 @@ for (a in 1:length(rownames(playlists))) {
       all_artists <- union(all_artists, playlist_i$items$track$artists[[n]]$id)
     }
     
+    ## Add genres into the all_genres vector
+    #for (c in 1:length(all_artists)) {
+      get.artist_url <- GET(paste0("https://api.spotify.com/v1/artists/",all_artists[5]), my_headers)
+      artists <- fromJSON(content(get.artist_url,"text"))
+      genres <- paste0(unlist(artists$genres), collapse = ",")
+      all_genres <- union(all_genres, genres)
+      artists$followers
+    #}
+    
     # Add song ids and dates added in playlist to vectors
     songs_from_playlist <- playlist_i$items$track$id
     date_songs_added <- playlist_i$items$added_at
@@ -64,12 +79,22 @@ for (a in 1:length(rownames(playlists))) {
     # Put vectors in a dataframe
     songs <- data.frame(songs_from_playlist, date_songs_added)
     
+    # Put vectors in a dataframe
+    artists_genres <- data.frame(all_artists, all_genres)
+    
     # Gets rid of coersion warnings
     songs$songs_from_playlist <- as.character(songs$songs_from_playlist)
     songs$date_songs_added <- as.character(songs$date_songs_added)
     
+    # Gets rid of coersion warnings
+    artists_genres$all_artists <- as.character(artists_genres$all_artists)
+    artists_genres$all_genres <- as.character(artists_genres$all_genres)
+    
     # Add this playlist's songs and dates to the main dataframe
     all_songs <- bind_rows(all_songs, songs)
+    
+    # Add this artists and genres to the main datafram
+    all_artists_genres <- bind_rows(all_artists_genres, artists_genres)
   }
 }
 
@@ -101,6 +126,13 @@ for(i in 1:number_of_chunks){
   dfs_50_songs[[i]][6] <- trackslist$tracks$name
   dfs_50_songs[[i]] <- rename(dfs_50_songs[[i]], release.date = V3, explicit = V4, popularity = V5, name = V6)
 }
+
+# Combines all data frames back together to create one big dataframe
+song_info <- data_frame()
+for(i in 1:number_of_chunks){
+  song_info <- bind_rows(song_info, dfs_50_songs[[i]])
+}
+
 
 # Combines all data frames back together to create one big dataframe
 song_info <- data_frame()

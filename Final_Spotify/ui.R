@@ -33,6 +33,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                         label = h4("Specify Spotify User"),
                         placeholder = "Enter username..."
                       ),
+                      actionButton("action", label = "Submit Username"),
                       # x <- Year account created (from server output)
                       # if(x == 2018){
                       sliderInput(
@@ -69,7 +70,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                         h2("What's Trending?"),
                         h3(),
                         
-                        actionButton("action", label = "Action"),
+                        
                         ## Plot charts showing top artists, songs, genres, etc
                         ## Trending in each country??/state
                         ## 
@@ -79,7 +80,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                       tabPanel(
                         "Your Music",
                         h2("Your Music"),
-                        h3(),
+                       # h3(textOutput("name")),
+                        print(textOutput("name")),
                         ## Plot charts showing top artists, songs, genres, etc
                         ## Based on inputted user name, maybe based on slider somehow
                         

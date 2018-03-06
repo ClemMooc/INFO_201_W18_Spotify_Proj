@@ -1,10 +1,10 @@
 library('httr')
 library('jsonlite')
 
-source('Final_Spotify/data/keys.R')
+spotify.client_id <- "9b82e79f3ec84c59986bf458d342b593"
+spotify.secret <- "bd2fb69dd1ac4c54bc16704c4eed8100"
 
 id_secret <- RCurl::base64(paste(spotify.client_id, spotify.secret, sep = ":"))
-
 
 my_headers<-add_headers(c(Authorization=paste('Basic',id_secret,sep=' ')))
 
@@ -18,5 +18,4 @@ token <- content(spotify)
 
 spotify.token <- token$access_token
 
-print(token$access_token)
-
+print(spotify.token)

@@ -3,7 +3,7 @@ library('dplyr')
 library('jsonlite')
 library('httpuv')
 
-source('Final_Spotify/data/keys.R')
+source('Final_Spotify/data/get.token.R')
 my_headers<-add_headers(c(Authorization=paste('Bearer',spotify.token,sep=' ')))
 userid <- 12170429496
   
@@ -27,4 +27,8 @@ artist_url <- paste0("https://api.spotify.com/v1/artists/",get.artist.id)
 get.artist <- GET(artist_url, my_headers)
 artists <- fromJSON(content(get.artist, "text"))
 genres <- as.data.frame(artists$genres)
-print(genres)
+
+user <- GET("https://api.spotify.com/v1/users/12170429496", my_headers)
+user.data  <- fromJSON(content(user, "text"))
+#print(user.data)
+print(user.data$error$message)

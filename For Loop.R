@@ -1,81 +1,77 @@
 library('httr')
 library('dplyr')
 library('jsonlite')
-library('httpuv')
-library("ggplot2")
 library("plotly")
-library('rlist')
 
 #setup
-source('/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify/data/keys.R')
+source('Final_Spotify/data/keys.R')
 my_headers<-add_headers(c(Authorization=paste('Bearer', spotify.token, sep=' ')))
 
-#user and playlist ID
-user.id = "12158467793"#'12170429496'
+# User id, to be made into a variable that depends on input.
+user.id = "12158467793"
 
-#playlist request, takes user ID and public playlist ID
-playlist.request = GET(paste0("https://api.spotify.com/v1/users/",user.id,"/playlists?limit=50"), my_headers)
-
-playlist.body = content(playlist.request, "text")
-playlist.data = fromJSON(playlist.body)
-playlists.owner <- playlist.data$items$owner %>%
-  select(id)
+# playlists request, takes user ID
+playlist.request <- GET(paste0("https://api.spotify.com/v1/users/",user.id,"/playlists?limit=50"), my_headers)
+playlist.data <-  fromJSON(content(playlist.request, "text"))
 playlists.info <- playlist.data$items %>%
   select(name, id)
+playlists.owner <- playlist.data$items$owner %>%
+  select(id)
+# The final dataframe to be used to get info from. Includes the playlist name, id, and owner id.
 playlists <- bind_cols(playlists.info, playlists.owner) %>%
   rename(owner = id1)
 
 ## ---- Creates a list of all songs a person listens to in all their playlists. Also a list of albums ----
 
-all_songs <- c()
-all_albums <- c()
- for(i in 1:length(rownames(playlists))){
-    id <- ifelse(playlists$owner[i] == user.id, user.id, playlists$owner[i])
-    playlist.request_i = GET(paste0("https://api.spotify.com/v1/users/", id, "/playlists/", playlists$id[i], "/tracks"), my_headers)
-    playlist_i = fromJSON(content(playlist.request_i, "text"))
-    songs_from_playlist <- playlist_i$items$track$id
-    albums_from_playlist <- playlist_i$items$track$album$id
-    all_albums <- union(all_albums, albums_from_playlist)
-    all_songs <- union(all_songs, songs_from_playlist)
- }
-print(all_songs)
-print(all_albums)
+# The number of tracks in each playlist
+number_of_tracks <- playlist.data$items$tracks$total
 
-#playlist.request2 = GET(paste0("https://api.spotify.com/v1/users/",user.id,"/playlists/", playlists$id, "/tracks"), my_headers)
-#print(playlist.request2)
-# playlist.body2 = content(playlist.request2, "text")
-# playlist.data2 = fromJSON(playlist.body)
-# playlists <- (playlist.data$items) %>%
-#   select(name, id)
-# # 
-# #plotly of year vs. popularity
-# playlist.date.tracks <- data.frame(date = playlist.tracks$album$release_date, popularity = playlist.tracks$popularity)
-# visual2 = plot_ly(data = playlist.date.tracks, x = ~date, y = ~popularity, type = 'scatter',
-#         marker = list(size = 10,
-#                       color = 'rgba(255, 182, 193, .9)',
-#                       line = list(color = 'rgba(152, 0, 0, .8)',
-#                                   width = 2))) %>%
-#   layout(title = 'Popularity & Release Date',
-#          yaxis = list(zeroline = FALSE),
-#          xaxis = list(zeroline = FALSE))
-# 
-# 
-# #get average popularity of songs in library
-# playlist.pop.avg = round(sum(playlist.data$tracks$items$track$popularity)/(nrow(playlist.tracks)),2)
-# 
-# #get your listener persona based on average
-# listener.persona = ""
-# 
-# if(playlist.pop.avg > 75){
-#   listener.persona = "Mainstream"
-# } else if(75 > playlist.pop.avg && playlist.pop.avg > 50){
-#   listener.persona = "In-betweener"
-# } else if(50 > playlist.pop.avg && playlist.pop.avg > 25){
-#   listener.persona = "Underground"
-# } else{
-#   listener.persona = "Mongolian Throat Singing"
-# }
-# 
-# #print their popularity of playlist
-# print(paste0("Based on your tracks in playlist: ", playlist.data$name, ", we see that your songs had a ", playlist.pop.avg, "% popularity. As a result, you're a ", listener.persona, " listener."))
-# 
+# Create empty data frame for the songs and dates
+all_songs <- data_frame()
+
+# Create empty vector for artists
+all_artists <- c()
+
+## For each playlist...
+for (a in 1:length(rownames(playlists))) {
+  
+  # The number of times that the endpoint must be accessed to get all of the tracks
+  number_of_calls <- ceiling(number_of_tracks[a] / 100)
+  
+  # The playlist author's id
+  id <- ifelse(playlists$owner[a] == user.id, user.id, playlists$owner[a])
+  
+  # Access the endpoint as many times as necessary to get all the songs from the API
+  for (i in 0:(number_of_calls-1)) {
+    # Access endpoint
+    playlist.request_i = GET(
+      paste0("https://api.spotify.com/v1/users/", id, "/playlists/", playlists$id[a], "/tracks?offset=", i*100),
+      my_headers
+    )
+    
+    # Access data from the JSON content recieved from the endpoint
+    playlist_i = fromJSON(content(playlist.request_i, "text"))
+    
+    # Add all artists ids into the all_artists vector
+    for (n in 1:length(playlist_i$items$track$artists)){
+      all_artists <- union(all_artists, playlist_i$items$track$artists[[n]]$id)
+    }
+    
+    # Add song ids and dates added in playlist to vectors
+    songs_from_playlist <- playlist_i$items$track$id
+    date_songs_added <- playlist_i$items$added_at
+    
+    # Put vectors in a dataframe
+    songs <- data.frame(songs_from_playlist, date_songs_added)
+    
+    # Gets rid of coersion warnings
+    songs$songs_from_playlist <- as.character(songs$songs_from_playlist)
+    songs$date_songs_added <- as.character(songs$date_songs_added)
+    
+    # Add this playlist's songs and dates to the main dataframe
+    all_songs <- bind_rows(all_songs, songs)
+  }
+}
+
+print(length(rownames(all_songs)))
+print(length(all_artists))

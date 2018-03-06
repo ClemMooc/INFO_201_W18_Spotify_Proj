@@ -27,4 +27,4 @@ artist_url <- paste0("https://api.spotify.com/v1/artists/",get.artist.id)
 get.artist <- GET(artist_url, my_headers)
 artists <- fromJSON(content(get.artist, "text"))
 genres <- as.data.frame(artists$genres)
-
+print(genres)

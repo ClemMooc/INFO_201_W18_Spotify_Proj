@@ -53,6 +53,16 @@ server <- function(input, output) {
     artists <- fromJSON(content(get.artist, "text"))
     genres <- as.data.frame(artists$genres)
     
+    #get global top 50 
+    global50 <- GET("https://api.spotify.com/v1/users/spotifycharts/playlists/37i9dQZEVXbMDoHDwVN2tF", my_headers)
+    global50.data <- fromJSON(content(global50,"text"))
+    global50.name = as.data.frame(global50.data$tracks$items$track$name)
+    
+    #get usa top 50 
+    usa50 <- GET("https://api.spotify.com/v1/users/spotifycharts/playlists/37i9dQZEVXbLRQDuF5jeBp", my_headers)
+    usa50.data <- fromJSON(content(usa50,"text"))
+    usa50.name = as.data.frame(usa50.data$tracks$items$track$name)
+    
   })
   ##renders basic scatterplot based on track popularity and release date
   output$scatter <- renderPlotly({
@@ -65,6 +75,7 @@ server <- function(input, output) {
              yaxis = list(zeroline = FALSE),
              xaxis = list(zeroline = FALSE))
   })
+  #render pie chart of explicit and non-explicit songs in playlist
   output$pie <- renderPlotly({
     
     explicit = track_data$explicit

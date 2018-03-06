@@ -15,7 +15,7 @@ spotify <- POST('https://accounts.spotify.com/api/token',
                 body = my_body,
                 encode = 'form')
 token <- content(spotify)
-print(token$access_token)
+
 spotify.token <- token$access_token
 
 print(token$access_token)

@@ -73,9 +73,10 @@ server <- function(input, output) {
                           color = 'rgba(255, 182, 193, .9)',
                           line = list(color = 'rgba(152, 0, 0, .8)',
                                       width = 2))) %>%
-      layout(title = 'Popularity & Release Date',
-             yaxis = list(zeroline = FALSE),
-             xaxis = list(zeroline = FALSE))
+      layout(title = 'How Obscure Is Your Music?',
+             yaxis = list(zeroline = FALSE, title = "<-- Unpopular                           Popular-->"),
+             xaxis = list(zeroline = FALSE, title = "<-- Old                                 New-->"))
+  )
   })
   #render pie chart of explicit and non-explicit songs in playlist
   output$pie <- renderPlotly({

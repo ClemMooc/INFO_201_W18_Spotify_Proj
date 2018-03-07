@@ -48,9 +48,31 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                              h3(),
                              fluidRow(
                                column(
-                                 6
-                               #  includeHTML(rmarkdown::render("about.spotify.rmd"))
-                                 ## Ruins the tabs
+                                 6,
+                                 h2("SpotR"),
+                                  h3("SpotR is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the Spotify Web Api. With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users the power to visualize their music playlist consumption."),
+                                  h3("Through the Spotify Web Api, we are able to source:"),
+
+                                     h3("- Artists"),
+                                     h3("- Playlists"),
+                                     h3("- Tracks"),
+                                     h3("- Release Date"),
+                                     h3("- Explicit/Non-Explicit"),
+                                  
+                                  h2("How it Works"),
+                                     h3("We utilized the HTTR, JSONLITE, and DPLYR packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized packages PLOTLY and FMSB to generate standard data charts (scatterplots and pie charts), and more sophisticated charts that required more than 2 lists of data (radar charts). Finally, with the SHINY package, we compiled everything up to make our data interactive with users."),
+
+                                  h2("The Team"),
+                                     h3("- Kris Wong"),
+
+
+                                     h3("- Clem Mooc"),
+
+
+                                     h3("- Thomas Penner"),
+
+
+                                     h3("- Gyubeom (Jason) Kim")
                                )
                              ),
                              value = 1),

@@ -1,6 +1,8 @@
 library("shiny")
 library("shinythemes")
 library("plotly")
+library('knitr')
+library('markdown')
 #source('data/global.R')
 ## Variables
 year <- as.numeric(format(Sys.Date(), "%Y"))
@@ -46,8 +48,7 @@ ui <- fluidPage(theme = shinytheme("simplex"),
                              fluidRow(
                                column(
                                  6,
-                                 h3()
-                                 #includeHTML("data/about.spotify.html")
+                                 includeHTML(rmarkdown::render("about.spotify.rmd"))
                                  ## Ruins the tabs
                                )
                              ),

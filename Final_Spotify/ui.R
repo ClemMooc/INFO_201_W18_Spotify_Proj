@@ -7,7 +7,7 @@ library('markdown')
 ## Variables
 year <- as.numeric(format(Sys.Date(), "%Y"))
 
-ui <- fluidPage(theme = shinytheme("simplex"),
+ui <- fluidPage(theme = shinytheme("superhero"),
                 fluidRow(column(1,h1("Spotify"))),
                 fluidRow(h1()),
 
@@ -16,6 +16,7 @@ ui <- fluidPage(theme = shinytheme("simplex"),
                   sidebarPanel(
                     width = 3,
                     conditionalPanel(
+                      h2("About SpotR"),
                       condition = "input.conditionedPanels == 1"
                     ),
                     
@@ -27,19 +28,19 @@ ui <- fluidPage(theme = shinytheme("simplex"),
                         placeholder = "Enter username..."
                       ),
                       actionButton("action", label = "Submit Username")
-                    ),
-                    
-                    conditionalPanel(
-                      condition = "input.conditionedPanels == 3",
-                      sliderInput(
-                        inputId = "slider",
-                        label = h4("Number of Top Songs"),
-                        min = 0,
-                        max = 100,
-                        value = 100,
-                        step = 10
-                      )
                     )
+                    
+                    # conditionalPanel(
+                    #   condition = "input.conditionedPanels == 3",
+                    #   sliderInput(
+                    #     inputId = "slider",
+                    #     label = h4("Number of Top Songs"),
+                    #     min = 0,
+                    #     max = 100,
+                    #     value = 100,
+                    #     step = 10
+                    #   )
+                    # )
                   ),
                   
                   mainPanel(tabsetPanel(
@@ -81,12 +82,12 @@ ui <- fluidPage(theme = shinytheme("simplex"),
                              ),
                              value = 2),
                     
-                    tabPanel("Trending",
-                             h2("What's Trending?"),
-                             h3(),
-                             
-                             ## NEED DATA HERE
-                             value = 3),
+                    # tabPanel("Trending",
+                    #          h2("What's Trending?"),
+                    #          h3(),
+                    #          
+                    #          ## NEED DATA HERE
+                    #          value = 3),
                     
                     id = "conditionedPanels"
                   ))

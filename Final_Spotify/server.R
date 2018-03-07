@@ -11,7 +11,7 @@ song_info <- data.frame()
 server <- function(input, output) {
   ## ------ Provides data for user when user id entered ------
   observeEvent(input$action, {
-    print("hi")
+    
     if (input$text == "") {
       output$name <- renderText({
         "Please Enter A Valid User ID"
@@ -34,7 +34,7 @@ server <- function(input, output) {
         user.id <- input$text
         song_info <- get.data.frame(user.id, token)
         song_info_g <- song_info
-        View(song_info)
+        
         if (nrow(song_info) > 0) {
           hasPlaylist <- TRUE
         }
@@ -60,9 +60,9 @@ server <- function(input, output) {
                      marker = list(colors = c('#1DB954', 'black'), line = list(color = '#1DB954', width = 1))
         ) %>%
           layout(title = paste0('Explicit and Clean Tracks in Playlists'),
-                 titlefont = list(size = 15, color = "black"),
-                 plot_bgcolor = '#fcfcfc',
-                 paper_bgcolor = '#fcfcfc',
+                 titlefont = list(size = 15, color = "white"),
+                 plot_bgcolor = '#2c3e4f',
+                 paper_bgcolor = '#2c3e4f',
                  yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
                  xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
         
@@ -71,9 +71,9 @@ server <- function(input, output) {
           layout(
             title = "This user has no playlists",
             width = 200,
-            titlefont = list(size = 15, color = "black"),
-            plot_bgcolor = '#fcfcfc',
-            paper_bgcolor = '#fcfcfc'
+            titlefont = list(size = 15, color = "white"),
+            plot_bgcolor = '#2c3e4f',
+            paper_bgcolor = '#2c3e4f'
           ) 
         
          
@@ -81,8 +81,8 @@ server <- function(input, output) {
         plotly_empty() %>%
           layout(
             width = 10,
-            plot_bgcolor = '#fcfcfc',
-            paper_bgcolor = '#fcfcfc'
+            plot_bgcolor = '#2c3e4f',
+            paper_bgcolor = '#2c3e4f'
           ) 
       }
     })
@@ -97,31 +97,6 @@ server <- function(input, output) {
 
     output$scatter <- renderPlotly({
       if (isData & hasPlaylist) {
-        # plot_ly(data = track_date_pop, x = ~date, y = ~popularity, 
-        #         type = 'scatter',
-        #         hoverinfo = "text",
-        #         text = ~name,
-        #         marker = list(size = 10,
-        #                         color = '#1DB954',
-        #                         line = list(color = 'black',
-        #                                     width = 2))) %>%
-        #   layout(
-        #     title = 'How Obscure Is Your Music?',
-        #     yaxis = list(title = "Popularity from 0 to 100"),
-        #     xaxis = list(autotick = FALSE,
-        #                  ticks = "outside",
-        #                  tick0 = 1965,
-        #                  dtick = 5,
-        #                  tickcolor = "black",
-        #                  title = "Release Date"),
-        #     titlefont = list(size = 15, color = "#fcfcfc"),
-        #     plot_bgcolor = '#fcfcfc',
-        #     paper_bgcolor = '#fcfcfc',
-        #     width = 800,
-        #     height = 450,
-        #     font = list(color = "dark grey"),
-        #     margin = list(l = 150, r = 20, b = 150, t = 50)
-        #   )
         plot_ly(
           data = track_date_pop,
           x = ~ date,
@@ -129,8 +104,8 @@ server <- function(input, output) {
           type = "scatter",
           marker = list(
             size = 10,
-            color = 'rgba(255, 182, 193, .9)',
-            line = list(color = 'rgba(152, 0, 0, .8)', width = 1)
+            color = '#1DB954',
+            line = list(color = 'light grey', width = 1)
           ),
           hoverinfo = 'text',
           text = ~ paste(name,
@@ -146,15 +121,15 @@ server <- function(input, output) {
               ticks = "outside",
               tick0 = start,
               dtick = 10,
-              tickcolor = "black",
+              tickcolor = "white",
               title = "Release Date"
             ),
-            titlefont = list(size = 15, color = "#fcfcfc"),
-            plot_bgcolor = '#fcfcfc',
-            paper_bgcolor = '#fcfcfc',
+            titlefont = list(size = 15, color = "#2c3e4f"),
+            plot_bgcolor = '#2c3e4f',
+            paper_bgcolor = '#2c3e4f',
             width = 800,
             height = 450,
-            font = list(color = "dark grey"),
+            font = list(color = "white"),
             margin = list(
               l = 150,
               r = 20,
@@ -167,8 +142,8 @@ server <- function(input, output) {
         plotly_empty() %>%
           layout(
             width = 10,
-            plot_bgcolor = '#fcfcfc',
-            paper_bgcolor = '#fcfcfc'
+            plot_bgcolor = '#2c3e4f',
+            paper_bgcolor = '#2c3e4f'
           ) 
       }
     })
@@ -187,8 +162,8 @@ server <- function(input, output) {
     output$radar <- renderPlot({
       
       if (isData & hasPlaylist) {
-        par(bg = "#fcfcfc")
-        par(col.lab="black")
+        par(bg = "#2c3e4f")
+        par(col.lab="white")
         radarchart(df, axistype=1 ,
                    
                    
@@ -198,19 +173,19 @@ server <- function(input, output) {
                    plwd=4,
                    
                    #custom the grid
-                   cglcol="dark grey", 
+                   cglcol="white", 
                    cglty=2, 
                    cglwd=0.8,
-                   axislabcol = "dark grey",
+                   axislabcol = "white",
                    #custom labels
                    vlcex=1
         ) 
         
-        title(main="Danceability VS Energy VS Valence VS Loudness VS Tempo", col.main="black") 
+        title(main="Danceability VS Energy VS Valence VS Loudness VS Tempo", col.main="white") 
         
         
       } else {
-        par(bg = "#fcfcfc")
+        par(bg = "#2c3e4f")
         frame()
       }
     })

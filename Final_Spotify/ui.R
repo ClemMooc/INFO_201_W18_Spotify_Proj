@@ -1,7 +1,7 @@
 library(shiny)
 library(shinythemes)
 library(plotly)
-
+#source('data/global.R')
 ## Variables
 year <- as.numeric(format(Sys.Date(), "%Y"))
 
@@ -16,16 +16,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                     
                     conditionalPanel(
                       condition = "input.conditionedPanels == 1",
-                      sliderInput(
-                        inputId = "slider",
-                        label = h4("Number of Top Songs"),
-                        min = 0,
-                        max = 100,
-                        value = 100,
-                        step = 10
-                      )
+                      h3("Hello World!")
                     ),
-                  
+                    
                     conditionalPanel(
                       condition = "input.conditionedPanels == 2",
                       textInput(
@@ -53,60 +46,37 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                     conditionalPanel(
                       condition = "input.conditionedPanels == 3",
                       sliderInput(
-                        inputId = "slider2",
-                        label = h4("Year Range"),
-                        min = 2006,
-                        max = year,
-                        value = c(2006, year),
-                        sep = ""
+                        inputId = "slider",
+                        label = h4("Number of Top Songs"),
+                        min = 0,
+                        max = 100,
+                        value = 100,
+                        step = 10
                       )
                     )
                   ),
                   
-                  mainPanel(
-                    tabsetPanel(
-                      tabPanel(
-                        "Trending",
-                        h2("What's Trending?"),
-                        h3(),
-                        
-                        
-                        ## Plot charts showing top artists, songs, genres, etc
-                        ## Trending in each country??/state
-                        ## 
-                        value = 1
-                      ),
-                      
-                      tabPanel(
-                        "Your Music",
-                        h2("Your Music"),
-                       # h3(textOutput("name")),
-                        print(textOutput("name")),
-                        ## Plot charts showing top artists, songs, genres, etc
-                        ## Based on inputted user name, maybe based on slider somehow
-                        
-                        ## Songs/artists/genres listened to per season bargraph
-                        
-                        fluidRow(column(
-                          6,
-                          plotlyOutput(outputId = "pieChart"),
-                          height = 50
-                        ),
-                        column(6,
-                               plotlyOutput(outputId = "pieChart2"))),
-                        value = 2
-                      ),
-                      
-                      tabPanel(
-                        "Music Map",
-                        h2("Most Popular Genres Around America"),
-                        h3(),
-                        ## Plot a map where you can hover over it and show most popular genre in area.
-                        ## Only if API has such information.
-                        value = 3
-                      ),
-                      
-                      id = "conditionedPanels"
-                    )
-                  )
+                  mainPanel(tabsetPanel(
+                    tabPanel("README",
+                             h3(),
+                             value = 1),
+                    
+                    tabPanel("Your Music",
+                             h2(textOutput("name")),
+                             h3(),
+                             fluidRow(
+                               column(
+                               4,
+                               plotlyOutput(outputId = "explicit"),
+                               height = 50
+                             )),
+                             value = 2),
+                    
+                    tabPanel("Trending",
+                             h2("What's Trending?"),
+                             h3(),
+                             value = 3),
+                    
+                    id = "conditionedPanels"
+                  ))
                 ))

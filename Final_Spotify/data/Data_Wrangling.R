@@ -11,6 +11,9 @@ get.data.frame <- function(user.id, token) {
   ## ------------ Gets all public playlists a user has made or follows ------------
   playlist.request <-GET(paste0("https://api.spotify.com/v1/users/", user.id, "/playlists?limit=50"), my_headers)
   playlist.data <-  fromJSON(content(playlist.request, "text"))
+  if(length(playlist.data$items) == 0){
+    return(data.frame())
+  }
   playlists.info <- playlist.data$items %>%
     select(name, id)
   playlists.owner <- playlist.data$items$owner %>%

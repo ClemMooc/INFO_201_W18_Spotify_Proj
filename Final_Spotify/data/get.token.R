@@ -1,8 +1,8 @@
 library('httr')
 library('jsonlite')
 
-spotify.client_id <- "9b82e79f3ec84c59986bf458d342b593"
-spotify.secret <- "bd2fb69dd1ac4c54bc16704c4eed8100"
+spotify.client_id <- "140034d1ea6d4b2d9cb369aa69d63bb6"
+spotify.secret <- "45a6d20a538d4ba083eb5f478b916c5b"
 
 id_secret <- RCurl::base64(paste(spotify.client_id, spotify.secret, sep = ":"))
 
@@ -18,4 +18,4 @@ token <- content(spotify)
 
 spotify.token <- token$access_token
 
-print(spotify.token)
+#print(token)

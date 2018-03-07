@@ -2,6 +2,7 @@ library('httr')
 library('dplyr')
 library('jsonlite')
 library("plotly")
+library('lubridate')
 
 get.data.frame <- function(user.id, token) {
   
@@ -107,8 +108,7 @@ get.data.frame <- function(user.id, token) {
     dfs_50_songs[[i]][8] <- features.data$audio_features$energy
     dfs_50_songs[[i]][9] <- features.data$audio_features$valence
     dfs_50_songs[[i]][10] <- features.data$audio_features$tempo
-    dfs_50_songs[[i]][11] <-
-      features.data$audio_features$instrumentalness
+    dfs_50_songs[[i]][11] <- features.data$audio_features$loudness
     
     dfs_50_songs[[i]] <-
       rename(
@@ -121,7 +121,7 @@ get.data.frame <- function(user.id, token) {
         energy = V8,
         valence = V9,
         tempo = V10,
-        instrumentalness = V11
+        loudness = V11
       )
   }
   ## ------------ Recombining Data Frames and improving readability ------------
@@ -140,38 +140,38 @@ get.data.frame <- function(user.id, token) {
   
   song_info <-
     mutate(song_info,
-           added_date = gsub("\\T.*", "", song_info$date_songs_added)) %>%
-    select(
-      name,
-      added_date,
-      release.date,
-      explicit,
-      popularity,
-      danceability,
-      energy,
-      valence,
-      tempo,
-      instrumentalness
-    )
+           added_date = gsub("\\T.*", "", song_info$date_songs_added))
   
-  #View(song_info)
+  
+  ###
+###
+###  This section right here is supposed to turn the release date into a decimal so the scatter plot can use it. It works in the non-function version of Data_Wrangling.R, but not this one. WHY???
+###   THIS IS CRITICAL
+  ###
+  #song_info$year.na <- decimal_date(as.Date(song_info$release.date))
+  
+  #song_info$year <- song_info$year.na
+  #my.na <- is.na(song_info$year.na)
+  #song_info$year[my.na] <- song_info$release.date[my.na]
+  
+  fast <- max(song_info$tempo)
+  song_info$tempo <- song_info$tempo/fast*100
+  song_info$loudness <- song_info$loudness+80
+  
+  song_info <- select(song_info,
+                      name,
+                      added_date,
+   #                   year,
+                      release.date,
+                      explicit,
+                      popularity,
+                      danceability,
+                      energy,
+                      valence,
+                      tempo,
+                      loudness
+  )
+  
+  return(song_info)
   # song_info is the final dataframe.
 }
-#
-# explicit.yes = (sum(song_info$explicit == "TRUE"))
-# explicit.no = (sum(song_info$explicit == "FALSE"))
-#
-# explicit.df = data.frame("Explicit" = explicit.yes, "Clean" = explicit.no)
-# explicit.values = c(explicit.yes, explicit.no)
-# explicit.label = c(colnames(explicit.df)[1], colnames(explicit.df)[2])
-#
-# x <- plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie',
-#         textposition = 'inside',
-#         textinfo = 'label+percent',
-#         insidetextfont = list(color = "white"),
-#         marker = list(colors = c('#1DB954', 'black'), line = list(color = '#1DB954', width = 1))
-# ) %>%
-#   layout(title = paste0('Ratio of Explicit and Non-Explicit tracks in Playlist'),
-#          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-#          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-# 

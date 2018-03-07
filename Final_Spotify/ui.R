@@ -1,22 +1,20 @@
-library(shiny)
-library(shinythemes)
-library(plotly)
+library("shiny")
+library("shinythemes")
+library("plotly")
 #source('data/global.R')
 ## Variables
 year <- as.numeric(format(Sys.Date(), "%Y"))
 
-ui <- fluidPage(theme = shinytheme("darkly"),
+ui <- fluidPage(theme = shinytheme("simplex"),
                 fluidRow(column(1,h1("Spotify"))),
                 fluidRow(h1()),
+
                 pageWithSidebar(
                   headerPanel(""),
-                  
                   sidebarPanel(
-                    width = 4,
-                    
+                    width = 3,
                     conditionalPanel(
-                      condition = "input.conditionedPanels == 1",
-                      h3("Hello World!")
+                      condition = "input.conditionedPanels == 1"
                     ),
                     
                     conditionalPanel(
@@ -26,21 +24,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                         label = h4("Specify Spotify User"),
                         placeholder = "Enter username..."
                       ),
-                      actionButton("action", label = "Submit Username"),
-                      # x <- Year account created (from server output)
-                      # if(x == 2018){
-                      sliderInput(
-                        inputId = "slider",
-                        label = h4("Year Range"),
-                        min = 2006, # x,
-                         # Change to year account created
-                        max = year,
-                        value = c(year-1, year),
-                        sep = ""
-                      )
-                      # } else {
-                      #     h4(paste("Results for", year, sep = " "))
-                      # }
+                      actionButton("action", label = "Submit Username")
                     ),
                     
                     conditionalPanel(
@@ -59,22 +43,48 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                   mainPanel(tabsetPanel(
                     tabPanel("README",
                              h3(),
+                             fluidRow(
+                               column(
+                                 6,
+                                 h3()
+                                 #includeHTML("data/about.spotify.html")
+                                 ## Ruins the tabs
+                               )
+                             ),
                              value = 1),
                     
                     tabPanel("Your Music",
                              h2(textOutput("name")),
                              h3(),
+                             
                              fluidRow(
                                column(
-                               4,
-                               plotlyOutput(outputId = "explicit"),
-                               height = 50
-                             )),
+                                 6,
+                                 plotlyOutput(outputId = "scatter")
+                               )
+                             ), 
+                             fluidRow(
+                               column(
+                                 6,
+                                 plotlyOutput(outputId = "explicit")
+                                 ####----------
+                                 ##
+                                 ## THIS IS NOT SHOWING UP ANYMORE IDK WHY
+                                 ##
+                                 ## ----------
+                               ),
+                               column(
+                                 6,
+                                 plotOutput(outputId = "radar",height = 300, width = 400)
+                               )
+                             ),
                              value = 2),
                     
                     tabPanel("Trending",
                              h2("What's Trending?"),
                              h3(),
+                             
+                             ## NEED DATA HERE
                              value = 3),
                     
                     id = "conditionedPanels"

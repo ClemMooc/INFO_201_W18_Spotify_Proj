@@ -2,10 +2,10 @@
 ```{r setup, include=FALSE, echo = FALSE}
 
 ```
-#About SpotR
+![](http://www.josesep.nl/wp-content/uploads/2017/06/spotify-logo.png)
 
-##What is SpotR?
-**SpotR** is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the [Spotify Web Api](https://developer.spotify.com/web-api/). With SpotR, users have the power to enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users **the power to visualize their music playlist consumption.**
+#About SpotR 
+**SpotR** is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the [Spotify Web Api](https://developer.spotify.com/web-api/). With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users **the power to visualize their music playlist consumption.**
 
 Through the Spotify Web Api, we are able to source:
 ```{r list, echo=FALSE}

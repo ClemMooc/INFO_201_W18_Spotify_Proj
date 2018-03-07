@@ -60,38 +60,18 @@ server <- function(input, output) {
         ## ----------
         #troubleshooting
         print("plot")
-        plot_ly(
-          data = explicit.df,
-          labels = ~ explicit.label,
-          values = ~ explicit.values,
-          type = 'pie',
-          height = 300,
-          width = 300,
-          textposition = 'inside',
-          textinfo = 'label+percent',
-          insidetextfont = list(color = "black"),
-          marker = list(
-            colors = c('black', '#1DB954'),
-            line = list(color = '#1DB954', width = 1)
-          )
+        plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie', height = 300, width = 300,
+                     textposition = 'inside',
+                     textinfo = 'label+percent',
+                     insidetextfont = list(color = "white"),
+                     marker = list(colors = c('#1DB954', 'black'), line = list(color = '#1DB954', width = 1))
         ) %>%
-          layout(
-            title = paste0('Explicit vs Clean tracks in Playlists'),
-            titlefont = list(size = 15, color = "black"),
-            plot_bgcolor = '#fcfcfc',
-            paper_bgcolor = '#fcfcfc',
-            yaxis = list(
-              showgrid = FALSE,
-              zeroline = FALSE,
-              showticklabels = FALSE
-            ),
-            xaxis = list(
-              showgrid = FALSE,
-              zeroline = FALSE,
-              showticklabels = FALSE
-            )
-          ) %>%
-          config(displayModeBar = FALSE)
+          layout(title = paste0('Explicit and Clean Tracks in Playlists'),
+                 titlefont = list(size = 15, color = "black"),
+                 plot_bgcolor = '#fcfcfc',
+                 paper_bgcolor = '#fcfcfc',
+                 yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                 xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
         
       } else if (isData) {
         #troubleshooting
@@ -106,8 +86,7 @@ server <- function(input, output) {
             titlefont = list(size = 15, color = "black"),
             plot_bgcolor = '#fcfcfc',
             paper_bgcolor = '#fcfcfc'
-          ) %>%
-          config(displayModeBar = FALSE)
+          ) 
         
       } else {
         #troubleshooting
@@ -121,8 +100,7 @@ server <- function(input, output) {
             width = 10,
             plot_bgcolor = '#fcfcfc',
             paper_bgcolor = '#fcfcfc'
-          ) %>%
-          config(displayModeBar = FALSE)
+          ) 
       }
     })
     ##-------- 
@@ -136,32 +114,15 @@ server <- function(input, output) {
 
     output$scatter <- renderPlotly({
       if (isData & hasPlaylist) {
-        plot_ly(
-          data = track_date_pop,
-          x = ~year,
-          y = ~popularity,
-          marker = list(
-            size = 10,
-            color = 'rgba(255, 182, 193, .9)',
-            line = list(color = 'rgba(152, 0, 0, .8)', width = 1)
-          ),
-          hoverinfo = 'text',
-          text = ~paste(name,
-                        '\n Release Date: ', date,
-                        '\n Popularity: ', popularity)
-        ) %>%
+        plot_ly(data = track_date_pop, x = ~date, y = ~popularity, type = 'scatter',
+                  marker = list(size = 10,
+                                color = '#1DB954',
+                                line = list(color = 'black',
+                                            width = 2))) %>%
           layout(
             title = 'How Obscure Is Your Music?',
-            yaxis = list(
-              zeroline = FALSE, 
-              title = "Popularity from 0 to 100"),
-            xaxis = list(
-              autotick = FALSE,
-              ticks = "outside",
-              tick0 = start,
-              dtick = 10,
-              tickcolor = "black",
-              title = "Release Date"),
+            yaxis = list(title = "Popularity from 0 to 100"),
+            xaxis = list(autotick = FALSE,ticks = "outside",tick0 = start,dtick = 10,tickcolor = "black",title = "Release Date"),
             titlefont = list(size = 15, color = "#fcfcfc"),
             plot_bgcolor = '#fcfcfc',
             paper_bgcolor = '#fcfcfc',
@@ -180,8 +141,7 @@ server <- function(input, output) {
             width = 10,
             plot_bgcolor = '#fcfcfc',
             paper_bgcolor = '#fcfcfc'
-          ) %>%
-          config(displayModeBar = FALSE)
+          ) 
       }
     })
     

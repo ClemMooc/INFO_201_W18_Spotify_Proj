@@ -41,7 +41,7 @@ ui <- fluidPage(theme = shinytheme("simplex"),
                   ),
                   
                   mainPanel(tabsetPanel(
-                    tabPanel("README",
+                    tabPanel("About SpotR",
                              h3(),
                              fluidRow(
                                column(

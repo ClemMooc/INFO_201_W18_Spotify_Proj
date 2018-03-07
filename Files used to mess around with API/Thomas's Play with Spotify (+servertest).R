@@ -76,7 +76,7 @@ server <- function(input, output) {
       layout(title = 'How Obscure Is Your Music?',
              yaxis = list(zeroline = FALSE, title = "<-- Unpopular                           Popular-->"),
              xaxis = list(zeroline = FALSE, title = "<-- Old                                 New-->"))
-  )
+  
   })
   #render pie chart of explicit and non-explicit songs in playlist
   output$pie <- renderPlotly({

@@ -2,6 +2,7 @@ library('httr')
 library('dplyr')
 library('jsonlite')
 library("plotly")
+library("fmsb")
 
 #setup
 source('Final_Spotify/data/get.token.R')

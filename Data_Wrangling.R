@@ -119,12 +119,21 @@ for(i in 1:number_of_chunks){
 # Gets track information 50 songs at a time
 for(i in 1:number_of_chunks){
   tracks <- GET(paste0("https://api.spotify.com/v1/tracks?ids=", gsub(" ", "", toString(dfs_50_songs[[i]]$songs_from_playlist))), my_headers)
-  trackslist <- fromJSON(content(tracks, "text"))
-  dfs_50_songs[[i]][3] <- trackslist$tracks$album$release_date
-  dfs_50_songs[[i]][4] <- trackslist$tracks$explicit
-  dfs_50_songs[[i]][5] <- trackslist$tracks$popularity
-  dfs_50_songs[[i]][6] <- trackslist$tracks$name
-  dfs_50_songs[[i]] <- rename(dfs_50_songs[[i]], release.date = V3, explicit = V4, popularity = V5, name = V6)
+  tracks.data <- fromJSON(content(tracks, "text"))
+  features <- GET(paste0("https://api.spotify.com/v1/audio-features?ids=", gsub(" ", "", toString(dfs_50_songs[[i]]$songs_from_playlist))), my_headers)
+  features.data <- fromJSON(content(features, "text"))
+  
+  dfs_50_songs[[i]][3] <- tracks.data$tracks$album$release_date
+  dfs_50_songs[[i]][4] <- tracks.data$tracks$explicit
+  dfs_50_songs[[i]][5] <- tracks.data$tracks$popularity
+  dfs_50_songs[[i]][6] <- tracks.data$tracks$name
+  dfs_50_songs[[i]][7] <- features.data$audio_features$danceability
+  dfs_50_songs[[i]][8] <- features.data$audio_features$energy
+  dfs_50_songs[[i]][9] <- features.data$audio_features$valence
+  dfs_50_songs[[i]][10] <- features.data$audio_features$tempo
+  dfs_50_songs[[i]][11] <- features.data$audio_features$instrumentalness
+  
+  dfs_50_songs[[i]] <- rename(dfs_50_songs[[i]], release.date = V3, explicit = V4, popularity = V5, name = V6, danceability = V7, energy = V8, valence = V9, tempo = V10, instrumentalness = V11)
 }
 
 # Combines all data frames back together to create one big dataframe
@@ -139,7 +148,7 @@ song_info <- data_frame()
 for(i in 1:number_of_chunks){
   song_info <- bind_rows(song_info, dfs_50_songs[[i]])
 }
-
+View(song_info)
 # song_info is the final dataframe.
 
   

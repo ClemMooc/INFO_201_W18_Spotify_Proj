@@ -169,3 +169,32 @@ View(song_info)
            yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
            xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
   
+  # Create dataframe with Danceability, Energy, and Valence(Scale: 0 - 100)
+  x <- avg.mean.dance * 100
+  y <- avg.mean.energy * 100
+  z <- avg.mean.val * 100
+  x_name <-"Danceablitiy"
+  y_name <-"Energy"
+  z_name <-"Valence"
+  df <- data.frame(x, y, z)
+  colnames(df) <- c(x_name,y_name,z_name)
+  
+  #Making Radar Chart
+  colnames(df) = c("Danceability" , "Enegy" , "Valence")
+  
+  df = rbind(rep(100,50), rep(0,50) , df)
+  
+  radarchart(df, axistype=1 ,
+             
+             title = "Danceability VS Energy VS Valence",
+             
+             pcol=rgb(0.2,0.5,0.5,0.9) , pfcol=rgb(0.2,0.5,0.5,0.5) , plwd=4 ,
+             
+             #custom the grid
+             cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,100,25), cglwd=0.8,
+             
+             #custom labels
+             vlcex=0.8
+  )
+  
+  

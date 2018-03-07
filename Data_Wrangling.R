@@ -150,8 +150,6 @@ for(i in 1:number_of_chunks){
 }
 View(song_info)
 # song_info is the final dataframe.
-
-  
   explicit.yes = (sum(song_info$explicit == "TRUE"))
   explicit.no = (sum(song_info$explicit == "FALSE"))
   
@@ -170,9 +168,9 @@ View(song_info)
            xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
   
   # Create dataframe with Danceability, Energy, and Valence(Scale: 0 - 100)
-  x <- avg.mean.dance * 100
-  y <- avg.mean.energy * 100
-  z <- avg.mean.val * 100
+  x <- mean(song_info$danceability) * 100
+  y <- mean(song_info$energy) * 100
+  z <- mean(song_info$valence) * 100
   x_name <-"Danceablitiy"
   y_name <-"Energy"
   z_name <-"Valence"

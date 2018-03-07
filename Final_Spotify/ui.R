@@ -8,12 +8,12 @@ year <- as.numeric(format(Sys.Date(), "%Y"))
 ui <- fluidPage(theme = shinytheme("darkly"),
                 fluidRow(column(1,h1("Spotify"))),
                 fluidRow(h1()),
+
                 pageWithSidebar(
                   headerPanel(""),
-                  
                   sidebarPanel(
+                    includeHTML("about.spotify.html"),
                     width = 4,
-                    
                     conditionalPanel(
                       condition = "input.conditionedPanels == 1",
                       sliderInput(
@@ -64,12 +64,13 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                   ),
                   
                   mainPanel(
+                    includeHTML("C:/Users/Thecl/Desktop/info201work/Assignments/INFO_201_W18_Spotify_Proj/about.spotify.html"),
+                    
                     tabsetPanel(
                       tabPanel(
                         "Trending",
                         h2("What's Trending?"),
                         h3(),
-                        
                         
                         ## Plot charts showing top artists, songs, genres, etc
                         ## Trending in each country??/state
@@ -96,6 +97,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                plotlyOutput(outputId = "pieChart2"))),
                         value = 2
                       ),
+                      
                       
                       tabPanel(
                         "Music Map",

@@ -11,9 +11,8 @@ Through the Spotify Web Api, we are able to source:
 ```{r list, echo=FALSE}
 markdown.list = "
 - Artists
-- Playlists (User and Chart Top 50's)
+- Playlists
 - Tracks
-- Genres
 - Release Date
 - Explicit/Non-Explicit
 "
@@ -21,7 +20,7 @@ markdown.list = "
 `r markdown.list`
 
 ##How it Works
-We utilized the **HTTR**, **JSONLITE**, and **DPLYR** packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized package **PLOTLY** to generate the data charts. Finally, with the **SHINY** package, we compiled everything up to make our data interactive with users.
+We utilized the **HTTR**, **JSONLITE**, and **DPLYR** packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized packages **PLOTLY** and **FMSB** to generate standard data charts (scatterplots and pie charts), and more sophisticated charts that required more than 2 lists of data (radar charts). Finally, with the **SHINY** package, we compiled everything up to make our data interactive with users.
 
 ##The Team
 - **Kris Wong**  

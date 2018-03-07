@@ -131,15 +131,14 @@ $(document).ready(function () {
 <p>Through the Spotify Web Api, we are able to source:</p>
 <ul>
 <li>Artists</li>
-<li>Playlists (User and Chart Top 50’s)</li>
+<li>Playlists</li>
 <li>Tracks</li>
-<li>Genres</li>
 <li>Release Date</li>
 <li>Explicit/Non-Explicit</li>
 </ul>
 <div id="how-it-works" class="section level2">
 <h2>How it Works</h2>
-<p>We utilized the <strong>HTTR</strong>, <strong>JSONLITE</strong>, and <strong>DPLYR</strong> packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized package <strong>PLOTLY</strong> to generate the data charts. Finally, with the <strong>SHINY</strong> package, we compiled everything up to make our data interactive with users.</p>
+<p>We utilized the <strong>HTTR</strong>, <strong>JSONLITE</strong>, and <strong>DPLYR</strong> packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized packages <strong>PLOTLY</strong> and <strong>FMSB</strong> to generate standard data charts (scatterplots and pie charts), and more sophisticated charts that required more than 2 lists of data (radar charts). Finally, with the <strong>SHINY</strong> package, we compiled everything up to make our data interactive with users.</p>
 </div>
 <div id="the-team" class="section level2">
 <h2>The Team</h2>

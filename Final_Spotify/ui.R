@@ -47,8 +47,6 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                     tabPanel("About SpotR",
                              h3(),
                              fluidRow(
-                               column(
-                                 6,
                                  h2("SpotR"),
                                   h3("SpotR is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the Spotify Web Api. With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users the power to visualize their music playlist consumption."),
                                   h3("Through the Spotify Web Api, we are able to source:"),
@@ -73,7 +71,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
 
 
                                      h3("- Gyubeom (Jason) Kim")
-                               )
+                               
                              ),
                              value = 1),
                     

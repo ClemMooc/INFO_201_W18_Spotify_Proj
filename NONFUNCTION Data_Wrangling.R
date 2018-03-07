@@ -4,7 +4,7 @@ library('jsonlite')
 library("plotly")
 
 #setup
-source("get.token.R")
+source("Final_Spotify/data/get.token.R")
 my_headers<-add_headers(c(Authorization=paste('Bearer', spotify.token, sep=' ')))
 
 # User id, to be made into a variable that depends on input.
@@ -175,21 +175,3 @@ song_info <- select(song_info,
 )
 
 View(song_info)
-
-
-  explicit.yes = (sum(song_info$explicit == "TRUE"))
-  explicit.no = (sum(song_info$explicit == "FALSE"))
-
-  explicit.df = data.frame("Explicit" = explicit.yes, "Clean" = explicit.no)
-  explicit.values = c(explicit.yes, explicit.no)
-  explicit.label = c(colnames(explicit.df)[1], colnames(explicit.df)[2])
-
-  x <- plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie',
-          textposition = 'inside',
-          textinfo = 'label+percent',
-          insidetextfont = list(color = "white"),
-          marker = list(colors = c('#1DB954', 'black'), line = list(color = '#1DB954', width = 1))
-  ) %>%
-    layout(title = paste0('Ratio of Explicit and Non-Explicit tracks in Playlist'),
-           yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-           xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))

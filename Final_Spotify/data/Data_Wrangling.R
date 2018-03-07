@@ -148,11 +148,13 @@ get.data.frame <- function(user.id, token) {
 ###  This section right here is supposed to turn the release date into a decimal so the scatter plot can use it. It works in the non-function version of Data_Wrangling.R, but not this one. WHY???
 ###   THIS IS CRITICAL
   ###
-  #song_info$year.na <- decimal_date(as.Date(song_info$release.date))
-  
-  #song_info$year <- song_info$year.na
-  #my.na <- is.na(song_info$year.na)
-  #song_info$year[my.na] <- song_info$release.date[my.na]
+  #for(i in 1:length(song_info$name)){
+    #print(nchar(song_info$release.date[i]) != 10)
+    song_info$year.na <- decimal_date(lubridate::ymd(song_info$release.date))
+ # }
+  song_info$year <- song_info$year.na
+  my.na <- is.na(song_info$year.na)
+  song_info$year[my.na] <- song_info$release.date[my.na]
   
   fast <- max(song_info$tempo)
   song_info$tempo <- song_info$tempo/fast*100
@@ -161,8 +163,7 @@ get.data.frame <- function(user.id, token) {
   song_info <- select(song_info,
                       name,
                       added_date,
-   #                   year,
-                      release.date,
+                      year,
                       explicit,
                       popularity,
                       danceability,

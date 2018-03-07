@@ -11,7 +11,7 @@ song_info <- data.frame()
 server <- function(input, output) {
   ## ------ Provides data for user when user id entered ------
   observeEvent(input$action, {
-    
+    print("hi")
     if (input$text == "") {
       output$name <- renderText({
         "Please Enter A Valid User ID"
@@ -53,13 +53,6 @@ server <- function(input, output) {
     
     output$explicit <- renderPlotly({
       if (isData & hasPlaylist) {
-        ####----------
-        ##
-        ## THIS IS NOT SHOWING UP ANYMORE IDK WHY
-        ##
-        ## ----------
-        #troubleshooting
-        print("plot")
         plot_ly(data = explicit.df, labels = ~explicit.label, values = ~explicit.values, type = 'pie', height = 300, width = 300,
                      textposition = 'inside',
                      textinfo = 'label+percent',
@@ -74,11 +67,6 @@ server <- function(input, output) {
                  xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
         
       } else if (isData) {
-        #troubleshooting
-        print("no lists")
-        ### -----
-        # THIS IS NOT SHOWING UP EITHER 
-        ### -----
         plotly_empty() %>%
           layout(
             title = "This user has no playlists",
@@ -89,12 +77,6 @@ server <- function(input, output) {
           ) 
         
       } else {
-        #troubleshooting
-        print('wtf')
-        
-        ### -----
-        # THIS IS NOT SHOWING UP EITHER 
-        ### -----
         plotly_empty() %>%
           layout(
             width = 10,
@@ -106,7 +88,7 @@ server <- function(input, output) {
     ##-------- 
     
      track_date_pop <-
-       data.frame(date = song_info$release.date,
+       data.frame(date = song_info$year,
                   popularity = song_info$popularity,
                   name = song_info$name)
   
@@ -114,15 +96,23 @@ server <- function(input, output) {
 
     output$scatter <- renderPlotly({
       if (isData & hasPlaylist) {
-        plot_ly(data = track_date_pop, x = ~date, y = ~popularity, type = 'scatter',
-                  marker = list(size = 10,
+        plot_ly(data = track_date_pop, x = ~date, y = ~popularity, 
+                type = 'scatter',
+                hoverinfo = "text",
+                text = ~name,
+                marker = list(size = 10,
                                 color = '#1DB954',
                                 line = list(color = 'black',
                                             width = 2))) %>%
           layout(
             title = 'How Obscure Is Your Music?',
             yaxis = list(title = "Popularity from 0 to 100"),
-            xaxis = list(autotick = FALSE,ticks = "outside",tick0 = start,dtick = 10,tickcolor = "black",title = "Release Date"),
+            xaxis = list(autotick = FALSE,
+                         ticks = "outside",
+                         tick0 = 1965,
+                         dtick = 5,
+                         tickcolor = "black",
+                         title = "Release Date"),
             titlefont = list(size = 15, color = "#fcfcfc"),
             plot_bgcolor = '#fcfcfc',
             paper_bgcolor = '#fcfcfc',
@@ -133,9 +123,6 @@ server <- function(input, output) {
           )
         
       } else {
-        ### -----
-        # THIS IS NOT SHOWING UP EITHER 
-        ### -----
         plotly_empty() %>%
           layout(
             width = 10,

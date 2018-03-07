@@ -47,8 +47,8 @@ ui <- fluidPage(theme = shinytheme("simplex"),
                              h3(),
                              fluidRow(
                                column(
-                                 6,
-                                 includeHTML(rmarkdown::render("about.spotify.rmd"))
+                                 6
+                               #  includeHTML(rmarkdown::render("about.spotify.rmd"))
                                  ## Ruins the tabs
                                )
                              ),

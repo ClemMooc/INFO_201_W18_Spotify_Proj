@@ -155,11 +155,13 @@ get.data.frame <- function(user.id, token) {
   song_info$year <- song_info$year.na
   my.na <- is.na(song_info$year.na)
   song_info$year[my.na] <- song_info$release.date[my.na]
+  song_info$year <- as.numeric(song_info$year)
+  
   
   fast <- max(song_info$tempo)
   song_info$tempo <- song_info$tempo/fast*100
   song_info$loudness <- song_info$loudness+80
-  
+
   song_info <- select(song_info,
                       name,
                       added_date,

@@ -1,6 +1,7 @@
 library('rsconnect')
-rsconnect::setAccountInfo(name='ktwong27', 
-                          token='3A06DB4CF05795D1824B097915049A6E', 
-                          secret='NnNpgQJRbUlkmiCiKoAWF5+azxpeIuth0CyGctLf')
 
-rsconnect::deployApp("/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify")
+rsconnect::setAccountInfo(name='ktwong27', 
+                          token='440227655F54A07900566DAF15453D9E', 
+                          secret='rSZPXRyUrfG73PU3w96nIA2HRj0+7wTOp9usiDQR')
+
+rsconnect::deployApp(appName = "SpotR", "/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify")

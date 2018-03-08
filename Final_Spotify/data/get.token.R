@@ -1,6 +1,3 @@
-library('httr')
-library('jsonlite')
-
 spotify.client_id <- "140034d1ea6d4b2d9cb369aa69d63bb6"
 spotify.secret <- "45a6d20a538d4ba083eb5f478b916c5b"
 

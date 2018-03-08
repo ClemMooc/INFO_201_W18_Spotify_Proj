@@ -1,26 +1,27 @@
 library("shiny")
 library("shinythemes")
 library("plotly")
-library('knitr')
-library('markdown')
-#source('data/global.R')
+
 ## Variables
 year <- as.numeric(format(Sys.Date(), "%Y"))
 
+## User Interface
 ui <- fluidPage(theme = shinytheme("superhero"),
                 fluidRow(column(1,h1("SpotR"))),
                 fluidRow(h1()),
-
+                ## ---------- Main Page Layout -----------
                 pageWithSidebar(
                   headerPanel(""),
+                  ## --------- Sidebar Panel ----------
                   sidebarPanel(
                     width = 3,
+                    ## -------- Panel for Tab 1; About SpotR ---------
                     conditionalPanel(
                       h3("SpotR:"),
                       h4("A Spotify Infographics Application"),
                       condition = "input.conditionedPanels == 1"
                     ),
-                    
+                    ## -------- Panel for Tab 2; Your Music ---------
                     conditionalPanel(
                       condition = "input.conditionedPanels == 2",
                       textInput(
@@ -42,9 +43,12 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                     )
                   ),
                   
+                  ## -------- Main Panel Where Data is Displayed ---------
                   mainPanel(tabsetPanel(
+                    ## ---------- Tab 1: About SpotR -----------
                     tabPanel("About SpotR",
                              h3(),
+                             ## -------- Description of SpotR --------
                              fluidRow(
                                  h2("SpotR"),
                                   h3("SpotR is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the Spotify Web Api. With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users the power to visualize their music playlist consumption."),
@@ -71,18 +75,15 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                   h2("The Team"),
                                      h3("- Kris Wong"),
 
-
                                      h3("- Clem Mooc"),
-
 
                                      h3("- Thomas Penner"),
 
-
                                      h3("- Gyubeom (Jason) Kim")
-                               
                              ),
                              value = 1),
                     
+                    ## ---------- Tab 2: Your Music -----------
                     tabPanel("Your Music",
                              h2(textOutput("name")),
                              h3(),
@@ -97,26 +98,16 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                column(
                                  6,
                                  plotlyOutput(outputId = "explicit")
-                                 ####----------
-                                 ##
-                                 ## THIS IS NOT SHOWING UP ANYMORE IDK WHY
-                                 ##
-                                 ## ----------
                                ),
                                column(
                                  6,
-                                 plotOutput(outputId = "radar",height = 350, width = 600)
+                                 plotOutput(outputId = "radar", width = 450)
                                )
                              ),
                              value = 2),
                     
-                    # tabPanel("Trending",
-                    #          h2("What's Trending?"),
-                    #          h3(),
-                    #          
-                    #          ## NEED DATA HERE
-                    #          value = 3),
-                    
                     id = "conditionedPanels"
+                    ## ---------------------------------------
+                    
                   ))
                 ))

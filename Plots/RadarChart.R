@@ -1,12 +1,12 @@
-# source("/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify/data/Data_Wrangling.R")
-# source("/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify/data/get.token.R")
-# song_info <- get.data.frame("12158467793", spotify.token)
+ source("/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify/data/Data_Wrangling.R")
+ source("/Users/kristoferwong/Documents/INFO201Git/Final/Final_Spotify/data/get.token.R")
+ song_info <- get.data.frame("12158467793", spotify.token)
 # 
-# d <- 5# mean(song_info$danceability) * 100
-# e <- 6 #mean(song_info$energy) * 100
-# v <- 12#mean(song_info$valence) * 100
-# l <-  18#mean(song_info$loudness)
-# t <- 10#mean(song_info$tempo) 
+ d <- mean(song_info$danceability) * 100
+ e <- mean(song_info$energy) * 100
+ v <- mean(song_info$valence) * 100
+ l <- mean(song_info$loudness)
+ t <- mean(song_info$tempo) 
 # 
 # #df <- data.frame(d,e,v,l,t)
 # 
@@ -38,16 +38,16 @@ p <- plot_ly(
   r = c(d, e, v, l, t),
   theta = c("Danceability" , "Energy" , "Valence", "Loudness", "Tempo"),
   fill = 'toself'
-) %>%
-  layout(
-    polar = list(
-      radialaxis = list(
-        visible = F,
-        range = c(0,100)
-      )
-    ),
-    showlegend = F
-  )
+) #%>%
+  # layout(
+  #   polar = list(
+  #     radialaxis = list(
+  #       visible = T,
+  #       range = c(0,100)
+  #     )
+  #   ),
+  #   showlegend = F
+  # )
 
 
 # radarchart(df, axistype=1 ,

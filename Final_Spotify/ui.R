@@ -97,7 +97,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                ),
                                column(
                                  6,
-                                 plotOutput(outputId = "radar",height = 300, width = 400)
+                                 plotOutput(outputId = "radar",height = 300, width = 600)
                                )
                              ),
                              value = 2),

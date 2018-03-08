@@ -29,12 +29,13 @@ server <- function(input, output) {
         isData <- FALSE
       } else {
         output$name <- renderText({
-          user.data$display_name
+          
+            user.data$display_name
+          
         })
         user.id <- input$text
         song_info <- get.data.frame(user.id, token)
-        song_info_g <- song_info
-        
+        View(song_info)
         if (nrow(song_info) > 0) {
           hasPlaylist <- TRUE
         }
@@ -91,7 +92,8 @@ server <- function(input, output) {
      track_date_pop <-
        data.frame(date = song_info$year,
                   popularity = song_info$popularity,
-                  name = song_info$name)
+                  name = song_info$name,
+                  release.date = song_info$release.date)
   
     start <- floor(min(track_date_pop$year)) - (floor(min(track_date_pop$year))%%5)
 
@@ -109,7 +111,7 @@ server <- function(input, output) {
           ),
           hoverinfo = 'text',
           text = ~ paste(name,
-                         '\n Release Date: ', date,
+                         '\n Release Date: ', release.date,
                          '\n Popularity: ', popularity)
         ) %>%
           layout(

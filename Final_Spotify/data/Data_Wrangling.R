@@ -166,6 +166,7 @@ get.data.frame <- function(user.id, token) {
                       name,
                       added_date,
                       year,
+                      release.date,
                       explicit,
                       popularity,
                       danceability,
@@ -173,7 +174,8 @@ get.data.frame <- function(user.id, token) {
                       valence,
                       tempo,
                       loudness
-  )
+  ) %>%
+    filter(!is.na(name))
   
   return(song_info)
   # song_info is the final dataframe.

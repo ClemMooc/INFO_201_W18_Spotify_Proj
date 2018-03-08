@@ -8,7 +8,7 @@ library('markdown')
 year <- as.numeric(format(Sys.Date(), "%Y"))
 
 ui <- fluidPage(theme = shinytheme("superhero"),
-                fluidRow(column(1,h1("Spotify"))),
+                fluidRow(column(1,h1("SpotR"))),
                 fluidRow(h1()),
 
                 pageWithSidebar(
@@ -16,7 +16,8 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                   sidebarPanel(
                     width = 3,
                     conditionalPanel(
-                      h2("About SpotR"),
+                      h3("SpotR:"),
+                      h4("A Spotify Infographics Application"),
                       condition = "input.conditionedPanels == 1"
                     ),
                     
@@ -24,23 +25,21 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                       condition = "input.conditionedPanels == 2",
                       textInput(
                         inputId = "text",
-                        label = h4("Specify Spotify User"),
+                        label = h3("Specify Spotify User"),
                         placeholder = "Enter username..."
                       ),
-                      actionButton("action", label = "Submit Username")
+                      actionButton("action", label = "Submit Username", style = "color: #4f5d6b; background-color: #1DB954"),
+                      
+                      tags$style(HTML(".js-irs-0 .irs-single, .js-irs-0 .irs-bar-edge, .js-irs-0 .irs-bar {background: #1DB954}")),
+                      sliderInput(
+                        inputId = "slider",
+                        label = h3("Display data from the past how many years?"),
+                        min = 1,
+                        max = year-2010,
+                        value = (year-2010),
+                        sep = ""
+                      )
                     )
-                    
-                    # conditionalPanel(
-                    #   condition = "input.conditionedPanels == 3",
-                    #   sliderInput(
-                    #     inputId = "slider",
-                    #     label = h4("Number of Top Songs"),
-                    #     min = 0,
-                    #     max = 100,
-                    #     value = 100,
-                    #     step = 10
-                    #   )
-                    # )
                   ),
                   
                   mainPanel(tabsetPanel(
@@ -82,7 +81,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                              fluidRow(
                                column(
                                  6,
-                                 plotlyOutput(outputId = "scatter")
+                                 plotlyOutput(outputId = "scatter", width = 300)
                                )
                              ), 
                              fluidRow(
@@ -97,7 +96,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                ),
                                column(
                                  6,
-                                 plotOutput(outputId = "radar",height = 300, width = 600)
+                                 plotOutput(outputId = "radar",height = 350, width = 600)
                                )
                              ),
                              value = 2),

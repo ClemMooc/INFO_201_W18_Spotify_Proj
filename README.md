@@ -1,12 +1,45 @@
-# INFO_201_W18_Spotify_Proj
 
-### READ THE FOLLOW DOCUMENT'S COMMENTS
-- ui.R
-- server.R
-- Data_Wrangling.R (both the one in Final_Spotify/data and the one in main directory)
+```{r setup, include=FALSE, echo = FALSE}
 
-## To Do still:
-- Fix current issues, especially in ui.R and server.R
-- Add trending music. Will be really easy, just create df from top50 playlist the same way we created the others and create same charts
-- Find a way to add the html without ruining the sidebarPanel
-- Come up with a name :)
+```
+![](http://www.josesep.nl/wp-content/uploads/2017/06/spotify-logo.png)
+
+#About SpotR 
+[SpotR App](https://ktwong27.shinyapps.io/final_spotify/)
+**SpotR** is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the [Spotify Web Api](https://developer.spotify.com/web-api/). With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users **the power to visualize their music playlist consumption.**
+
+Through the Spotify Web Api, we are able to source:
+```{r list, echo=FALSE}
+markdown.list = "
+- Artists
+- Playlists
+- Tracks
+- Release Date
+- Explicit/Non-Explicit
+"
+```
+`r markdown.list`
+
+##How it Works
+We utilized the **HTTR**, **JSONLITE**, and **DPLYR** packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized packages **PLOTLY** and **FMSB** to generate standard data charts (scatterplots and pie charts), and more sophisticated charts that required more than 2 lists of data (radar charts). Finally, with the **SHINY** package, we compiled everything up to make our data interactive with users.
+
+##How to get user URI
+On the spotify desktop application:
+1. Go to User page, which can be found my searching for a specific user or through the signed-in account.
+2. Select the ellipses, click share, and copy spotify URI
+3. Your user ID is everything after the second colon.
+On iOS mobile application:
+1. Select settings
+2. Select account
+
+##The Team
+- **Kris Wong**  
+<iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:12158467793&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+
+- **Clem Mooc**  
+<iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:1262636354&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+
+- **Thomas Penner**  
+<iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:22stxix34kkqknmrl5wov2jgy&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+
+- **Gyubeom (Jason) Kim**  

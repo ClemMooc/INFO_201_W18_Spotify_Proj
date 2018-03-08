@@ -1,7 +1,4 @@
 
-```{r setup, include=FALSE, echo = FALSE}
-
-```
 ![](http://www.josesep.nl/wp-content/uploads/2017/06/spotify-logo.png)
 
 #About SpotR

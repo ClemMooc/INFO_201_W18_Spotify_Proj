@@ -1,8 +1,8 @@
 
 ![](http://www.josesep.nl/wp-content/uploads/2017/06/spotify-logo.png)
 
-<<<<<<< HEAD
-#About SpotR
+
+# About SpotR
 #
 **SpotR** [SpotR App Link](https://ktwong27.shinyapps.io/final_spotify/) is an interactive web application that creates visual graphics out of your playlist data. 
 

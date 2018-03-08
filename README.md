@@ -34,12 +34,9 @@ On iOS mobile application:
 
 ##The Team
 - **Kris Wong**  
-<iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:12158467793&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
 
 - **Clem Mooc**  
-<iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:1262636354&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
 
 - **Thomas Penner**  
-<iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:22stxix34kkqknmrl5wov2jgy&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
 
 - **Gyubeom (Jason) Kim**  

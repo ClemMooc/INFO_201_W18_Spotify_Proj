@@ -3,7 +3,7 @@
 
 # About SpotR
 
-[**The SpotR App**](https://ktwong27.shinyapps.io/final_spotify/) is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the [Spotify Web Api](https://developer.spotify.com/web-api/). With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users **the power to visualize their music playlist consumption.**
+[**The SpotR App**](https://ktwong27.shinyapps.io/SpotR/) is an interactive web app that creates visual graphics out of your playlist data. We directly source track and playlist data from the [Spotify Web Api](https://developer.spotify.com/web-api/). With SpotR, users can enter a specific Spotify User id, and bring up visuals regarding their playlist information. With this app, we give Spotify users **the power to visualize their music playlist consumption.**
 
 Through the Spotify Web Api, we are able to source:
 

@@ -36,8 +36,8 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                         inputId = "slider",
                         label = h3("Display data from the past how many years?"),
                         min = 1,
-                        max = year-2010,
-                        value = (year-2010),
+                        max = year-2006,
+                        value = (year-2006),
                         sep = ""
                       )
                     )

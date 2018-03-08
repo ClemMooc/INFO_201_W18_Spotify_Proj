@@ -18,11 +18,11 @@ Through the Spotify Web Api, we are able to source:
 #
 We utilized the **HTTR**, **JSONLITE**, and **DPLYR** packages to access, retrieve, and wrangle the Spotify data. By compiling data frames with song and playlist info, we then utilized packages **PLOTLY** and **FMSB** to generate standard data charts (scatterplots and pie charts), and more sophisticated charts that required more than 2 lists of data (radar charts). Finally, with the **SHINY** package, we compiled everything up to make our data interactive with users.
 
-#How to get user URI
+#How to get user URI  
 On the spotify desktop application:
 1. Go to User page, which can be found my searching for a specific user or through the signed-in account.
 2. Select the ellipses, click share, and copy spotify URI
-3. Your user ID is everything after the second colon.
+3. Your user ID is everything after the second colon.  
 On iOS mobile application:
 1. Select settings
 2. Select account

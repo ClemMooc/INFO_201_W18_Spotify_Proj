@@ -55,7 +55,9 @@ server <- function(input, output) {
     }
     
     
-    ## ----- Explicit Pie Chart ----
+
+    ##------ Create Pie chart of explicit and safe tracks
+
     output$explicit <- renderPlotly({
       if (isData & hasPlaylist) {
         ex.date.df <- song_info %>%
@@ -108,10 +110,9 @@ server <- function(input, output) {
           )
       }
     })
-    ##--------
-    
-    
-    
+
+    ##-------- Create scatterplot with release data as x axis and popularity as y axis
+
     output$scatter <- renderPlotly({
       if (isData & hasPlaylist) {
         pop.date.df <- song_info %>%
@@ -194,9 +195,9 @@ server <- function(input, output) {
       }
     })
     
-    
-    output$radar <- renderPlot({
-      print('asdfsdafjkl')
+   #-----radar chart including daneability, energy, valence, loudness, and tempo
+     output$radar <- renderPlot({
+      
       if (isData & hasPlaylist) {
         rad.date.df <- song_info %>%
           filter(current.year - input$slider <= song_info$added_date)
@@ -246,8 +247,4 @@ server <- function(input, output) {
       }
     })
   })
-  ## ----------- Other info ----------
-  
-  
-  
 }

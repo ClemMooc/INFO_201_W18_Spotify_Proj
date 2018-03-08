@@ -44,7 +44,7 @@ server <- function(input, output) {
     }
     
     
-    ## ----- Explicit Pie Chart ----
+    ##------create pie chart of explicit and safe traces
     explicit.yes = (sum(song_info$explicit == "TRUE"))
     explicit.no = (sum(song_info$explicit == "FALSE"))
     
@@ -87,8 +87,10 @@ server <- function(input, output) {
           ) 
       }
     })
-    ##-------- 
     
+    
+    
+    ##--------create scatterplot with release data as x axis and popularity as y axis
      track_date_pop <-
        data.frame(date = song_info$year,
                   popularity = song_info$popularity,
@@ -96,7 +98,7 @@ server <- function(input, output) {
                   release.date = song_info$release.date)
   
     start <- floor(min(track_date_pop$year)) - (floor(min(track_date_pop$year))%%5)
-
+    
     output$scatter <- renderPlotly({
       if (isData & hasPlaylist) {
         plot_ly(
@@ -156,12 +158,15 @@ server <- function(input, output) {
     l <- mean(song_info$loudness)
     t <- mean(song_info$tempo) 
    
+    
+   #-----radar chart including daneability, energy, valence, loudness, and tempo
     df <- data.frame(d,e,v,l,t)
     
     colnames(df) = c("Danceability" , "Enegy" , "Valence", "Loudness", "Tempo")
     
     df = rbind(rep(100,50), rep(0,50) , df)
-    output$radar <- renderPlot({
+    
+     output$radar <- renderPlot({
       
       if (isData & hasPlaylist) {
         par(bg = "#2c3e4f")

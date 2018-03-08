@@ -35,26 +35,20 @@
 
 p <- plot_ly(
   type = 'scatterpolar',
+  r = c(d, e, v, l, t),
+  theta = c("Danceability" , "Energy" , "Valence", "Loudness", "Tempo"),
   fill = 'toself'
 ) %>%
-  add_trace(
-    r = c(39, 28, 8, 7, 28, 39),
-    theta = c('A','B','C', 'D', 'E', 'A'),
-    name = 'Group A'
-  ) %>%
-  add_trace(
-    r = c(1.5, 10, 39, 31, 15, 1.5),
-    theta = c('A','B','C', 'D', 'E', 'A'),
-    name = 'Group B'
-  ) %>%
   layout(
     polar = list(
       radialaxis = list(
-        visible = T,
-        range = c(0,50)
+        visible = F,
+        range = c(0,100)
       )
-    )
+    ),
+    showlegend = F
   )
+
 
 # radarchart(df, axistype=1 ,
 #            pcol=rgb(0.2,0.5,0.5,0.9), 

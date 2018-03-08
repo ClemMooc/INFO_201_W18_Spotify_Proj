@@ -3,7 +3,7 @@
 
 
 # About SpotR
-#
+
 **SpotR** [SpotR App Link](https://ktwong27.shinyapps.io/final_spotify/) is an interactive web application that creates visual graphics out of your playlist data. 
 
 In order to view graphics of your own music playlist data, enter your Spotify user ID (URI) under the 'Your Music' tab. These graphics serve as a visualization of how different aspects of the user's music consumption have changed over the course of their Spotify subscription. You may change how many of the past years of data is used in creating the graphics by moving the slider. The slider defaults at 12 years, which is how old Spotify is. With this app, we give Spotify users **the power to visualize their music playlist consumption.**
